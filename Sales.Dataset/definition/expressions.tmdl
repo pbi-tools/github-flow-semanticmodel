@@ -1,11 +1,11 @@
-expression HttpSource = "https://raw.githubusercontent.com/pbi-tools/sales-sample/data/" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+expression HttpSource = "https://raw.githubusercontent.com/" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
 	lineageTag: 39c7bef4-452b-4b29-846c-f788ef1af01f
 
 	annotation PBI_ResultType = Text
 
 expression RAW-Sales =
 		let
-		    Source = Csv.Document(Web.Contents(HttpSource & "RAW-Sales.csv"),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents(HttpSource, [RelativePath = "pbi-tools/sales-sample/data/RAW-Sales.csv"]),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 		    #"Changed Column Types" = Table.TransformColumnTypes(#"Promoted Headers",{
 		        {"Order Number", Int64.Type},
@@ -36,7 +36,7 @@ expression RAW-Sales =
 
 expression RAW-Product =
 		let
-		    Source = Csv.Document(Web.Contents(HttpSource & "RAW-Product.csv"),[Delimiter=",", Columns=14, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents(HttpSource, [RelativePath = "pbi-tools/sales-sample/data/RAW-Product.csv"]),[Delimiter=",", Columns=14, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 		    #"Changed Column Types" = Table.TransformColumnTypes(#"Promoted Headers",{
 		        {"ProductKey", Int64.Type},
@@ -64,7 +64,7 @@ expression RAW-Product =
 
 expression RAW-Customer =
 		let
-		    Source = Csv.Document(Web.Contents(HttpSource & "RAW-Customer.csv"),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents(HttpSource, [RelativePath = "pbi-tools/sales-sample/data/RAW-Customer.csv"]),[Delimiter=",", Columns=13, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 		    #"Changed Column Types" = Table.TransformColumnTypes(#"Promoted Headers",{
 		        {"CustomerKey", Int64.Type},
@@ -91,7 +91,7 @@ expression RAW-Customer =
 
 expression RAW-Store =
 		let
-		    Source = Csv.Document(Web.Contents(HttpSource & "RAW-Store.csv"),[Delimiter=",", Columns=9, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents(HttpSource, [RelativePath = "pbi-tools/sales-sample/data/RAW-Store.csv"]),[Delimiter=",", Columns=9, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 		    #"Changed Column Types" = Table.TransformColumnTypes(#"Promoted Headers",{
 		        {"StoreKey", Int64.Type},
@@ -114,7 +114,7 @@ expression RAW-Store =
 
 expression RAW-CurrencyExchange =
 		let
-		    Source = Csv.Document(Web.Contents(HttpSource & "RAW-CurrencyExchange.csv"),[Delimiter=",", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Web.Contents(HttpSource, [RelativePath = "pbi-tools/sales-sample/data/RAW-CurrencyExchange.csv"]),[Delimiter=",", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 		    #"Changed Column Types" = Table.TransformColumnTypes(#"Promoted Headers",{
 		        {"Date", type date},
