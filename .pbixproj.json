@@ -102,32 +102,34 @@
         "report": {
           "definitionSource": "Generate",
           "datasetReference": {
-            "workspace": "CI-CD Tutorial",
+            "workspace": "{{MODEL_WORKSPACE}}",
             "model": "Sales"
           }
         },
         "console": {}
       },
       "parameters": {
-        "WORKSPACE": "pbi-tools-test"
+        "WORKSPACE": "fabconf-demo-reports",
+        "MODEL_WORKSPACE": "fabconf-demo-1"
       },
       "environments": {
         "Development": {
-          "workspace": "{{WORKSPACE}}",
+          "workspace": "{{WORKSPACE}} [DEV]",
           "displayName": "Sales [{{ENVIRONMENT}}]",
           "report": {
+            "datasetReference": {
+              "workspace": "{{MODEL_WORKSPACE}} [UAT]",
+              "model": "Sales [UAT]"
+            }
           }
         },
-        "UAT": {
-          "workspace": "{{WORKSPACE}}",
+        "Test": {
+          "workspace": "{{WORKSPACE}} [TEST]",
           "displayName": "Sales [{{ENVIRONMENT}}]"
         },
         "Production": {
           "workspace": "{{WORKSPACE}}",
-          "displayName": "Sales",
-          "refresh":{
-            "type": "Full"
-          }
+          "displayName": "Sales"
         }
       }
     }

@@ -1,11 +1,12 @@
-name: SemanticModel-DEV
+name: Report-DEV
 
 # Controls when the workflow will run
 on:
-  pull_request:
-    branches:
-      - 'Release/*'
-
+  push:
+    branches: [ develop ]
+    paths:
+      - 'Sales.Report/**'
+    
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
@@ -16,7 +17,7 @@ on:
         default: true
 
 env:
-  PROFILE: Model
+  PROFILE: Report
 
 jobs:
   Deployment:
