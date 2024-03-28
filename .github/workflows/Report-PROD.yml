@@ -1,10 +1,11 @@
-name: SemanticModel-DEV
+name: Report-PROD
 
 # Controls when the workflow will run
 on:
-  pull_request:
-    branches:
-      - 'Release/*'
+  push:
+    branches: [ main ]
+    paths:
+    - 'Sales.Report/**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -16,12 +17,12 @@ on:
         default: true
 
 env:
-  PROFILE: Model
+  PROFILE: Report
 
 jobs:
   Deployment:
     runs-on: ubuntu-latest
-    environment: Development
+    environment: Production
     container:
       image: ghcr.io/pbi-tools/pbi-tools-preview:latest
 
@@ -36,13 +37,13 @@ jobs:
       - name: pbi-tools deploy (WhatIf)
         if: ${{ github.event.inputs.whatIf == 'true' }}
         run: |
-          /app/pbi-tools/pbi-tools.core deploy . "$PROFILE" -whatIf
+          /app/pbi-tools/pbi-tools.core deploy . "$PROFILE" Production -whatIf
         env:
           PBI_CLIENT_SECRET: ${{ secrets.PBI_CLIENT_SECRET }}
 
       - name: pbi-tools deploy
         if: ${{ github.event.inputs.whatIf != 'true' }}
         run: |
-          /app/pbi-tools/pbi-tools.core deploy . "$PROFILE"
+          /app/pbi-tools/pbi-tools.core deploy . "$PROFILE" Production
         env:
           PBI_CLIENT_SECRET: ${{ secrets.PBI_CLIENT_SECRET }}
