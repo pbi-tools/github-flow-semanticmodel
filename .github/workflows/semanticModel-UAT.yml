@@ -36,13 +36,13 @@ jobs:
       - name: pbi-tools deploy (WhatIf)
         if: ${{ github.event.inputs.whatIf == 'true' }}
         run: |
-          /app/pbi-tools/pbi-tools.core deploy . "$PROFILE" -whatIf
+          /app/pbi-tools/pbi-tools.core deploy . "$PROFILE" UAT -whatIf
         env:
           PBI_CLIENT_SECRET: ${{ secrets.PBI_CLIENT_SECRET }}
 
       - name: pbi-tools deploy
         if: ${{ github.event.inputs.whatIf != 'true' }}
         run: |
-          /app/pbi-tools/pbi-tools.core deploy . "$PROFILE"
+          /app/pbi-tools/pbi-tools.core deploy . "$PROFILE" UAT
         env:
           PBI_CLIENT_SECRET: ${{ secrets.PBI_CLIENT_SECRET }}
