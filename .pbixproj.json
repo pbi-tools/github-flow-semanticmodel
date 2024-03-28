@@ -1,0 +1,135 @@
+{
+  "version": "0.14",
+  "created": "2024-03-07T13:59:28.494657+01:00",
+  "deployments": {
+    "Model": {
+      "mode": "Dataset",
+      "source": {
+        "type": "Folder",
+        "path": "./Sales.Dataset/definition"
+      },
+      "authentication": {
+        "type": "ServicePrincipal",
+        "tenantId": "pbitools.org",
+        "clientId": "708b6947-c640-4a74-9100-e4b3312b7182",
+        "clientSecret": "%PBI_CLIENT_SECRET%"
+      },
+      "credentials": [
+        {
+          "match": {
+            "datasourceType": "Web",
+            "connectionDetails": {
+              "url": "https://raw.githubusercontent.com/pbi-tools/sales-sample/data"
+            }
+          },
+          "updateMode": "NotSpecified",
+          "type": "Anonymous"
+        }
+      ],
+      "options": {
+        "refresh": {
+          "enabled": true,
+          "skipNewDataset": false,
+          "type": "Automatic",
+          "objects": {
+            "About": "Full"
+          },
+          "tracing": {
+            "enabled": true,
+            "logEvents": {
+              "filter": [
+                "*|ReadData|*"
+              ]
+            },
+            "summary": {
+              "events": [
+                "TabularRefresh"
+              ],
+              "objectTypes": [
+                "Partition"
+              ],
+              "outPath": "./.artifacts/refresh-summary.csv",
+              "console": true
+            }
+          }
+        },
+        "dataset": {
+          "replaceParameters": true,
+          "setCredentials": true,
+          "bpa": {
+            "sources": [
+              "https://raw.githubusercontent.com/microsoft/Analysis-Services/master/BestPracticeRules/BPARules.json"
+            ],
+            "failOnWarning": false
+          }
+        },
+        "console": {}
+      },
+      "parameters": {
+        "WORKSPACE": "fabconf-demo-1"
+      },
+      "environments": {
+        "Development": {
+          "workspace": "{{WORKSPACE}} [DEV]",
+          "displayName": "Sales [{{ENVIRONMENT}}]"
+        },
+        "UAT": {
+          "workspace": "{{WORKSPACE}} [UAT]",
+          "displayName": "Sales [{{ENVIRONMENT}}]"
+        },
+        "Production": {
+          "workspace": "{{WORKSPACE}}",
+          "displayName": "Sales",
+          "refresh":{
+            "type": "Full"
+          }
+        }
+      }
+    },
+    "Report": {
+      "mode": "FabricReport",
+      "source": {
+        "type": "Folder",
+        "path": "./Sales.Report"
+      },
+      "authentication": {
+        "type": "ServicePrincipal",
+        "tenantId": "pbitools.org",
+        "clientId": "708b6947-c640-4a74-9100-e4b3312b7182",
+        "clientSecret": "%PBI_CLIENT_SECRET%"
+      },
+      "options": {
+        "report": {
+          "definitionSource": "Generate",
+          "datasetReference": {
+            "workspace": "CI-CD Tutorial",
+            "model": "Sales"
+          }
+        },
+        "console": {}
+      },
+      "parameters": {
+        "WORKSPACE": "pbi-tools-test"
+      },
+      "environments": {
+        "Development": {
+          "workspace": "{{WORKSPACE}}",
+          "displayName": "Sales [{{ENVIRONMENT}}]",
+          "report": {
+          }
+        },
+        "UAT": {
+          "workspace": "{{WORKSPACE}}",
+          "displayName": "Sales [{{ENVIRONMENT}}]"
+        },
+        "Production": {
+          "workspace": "{{WORKSPACE}}",
+          "displayName": "Sales",
+          "refresh":{
+            "type": "Full"
+          }
+        }
+      }
+    }
+  }
+}
