@@ -1,4 +1,4 @@
-name: SemanticModel-DEV
+name: SemanticModel-UAT
 
 # Controls when the workflow will run
 on:
