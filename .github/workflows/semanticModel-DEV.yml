@@ -3,8 +3,7 @@ name: SemanticModel-DEV
 # Controls when the workflow will run
 on:
   pull_request:
-    branches:
-      - 'Release/*'
+    branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
