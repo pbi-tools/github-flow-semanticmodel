@@ -34,7 +34,7 @@ table About
 				let
 				    Source = #table({ "Key", "Value" },{
 				        { "Developed by", "Microsoft" },
-				        { "Version", "1.0" },
+				        { "Version", "1.1" },
 				        { "Description", "Sales.pbip" },
 				        { "Last Refresh", DateTime.ToText(DateTime.LocalNow(), "yyyy-MM-dd HH:mm:ss") }
 				    }),
